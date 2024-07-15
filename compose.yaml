@@ -12,4 +12,4 @@ services:
       - 8006:8006
     stop_grace_period: 2m
     volumes:
-      - /home/user/almalinux.qcow2:/AlmaLinux-9-GenericCloud-9.4-20240507.x86_64.qcow2:ro
+      - ./AlmaLinux-9-GenericCloud-9.4-20240507.x86_64.qcow2:/boot.qcow2
