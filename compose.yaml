@@ -1,0 +1,15 @@
+name: qemux
+
+services:
+  qemu:
+    container_name: qemux
+    image: qemux/qemu-docker
+    devices:
+      - /dev/kvm
+    cap_add:
+      - NET_ADMIN
+    ports:
+      - 8006:8006
+    stop_grace_period: 2m
+    volumes:
+      - /home/user/almalinux.qcow2:/AlmaLinux-9-GenericCloud-9.4-20240507.x86_64.qcow2:ro
