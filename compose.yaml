@@ -3,7 +3,7 @@ name: qemux
 services:
   qemu:
     container_name: qemux
-    image: qemux/qemu-docker
+    image: reg.oncolog.ir/qemu-docker
     devices:
       - /dev/kvm
     cap_add:
@@ -11,5 +11,19 @@ services:
     ports:
       - 8006:8006
     stop_grace_period: 2m
+    entrypoint: ["/usr/bin/tini", "-s", "/run/entryy.sh"]
+    user: root
+    environment:
+      DISK_SIZE: "10G"
+      RAM_SIZE: "2000G"
+      CPU_CORES: "16"
     volumes:
-      - ./AlmaLinux-9-GenericCloud-9.4-20240507.x86_64.qcow2:/boot.qcow2
+      - ./Fedora-Workstation-Live-x86_64-39-1.5.iso:/boot.iso:ro
+      - ./resett.sh:/run/resett.sh:ro
+      - ./entryy.sh:/run/entryy.sh:ro
+      - ./configg.sh:/run/configg.sh:ro
+      - qemux:/storage
+
+volumes:
+  qemux:
+    name: qemux
