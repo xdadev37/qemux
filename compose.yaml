@@ -1,29 +1,38 @@
 name: qemux
 
 services:
-  qemu:
+  qemux:
     container_name: qemux
-    image: reg.oncolog.ir/qemu-docker
+    image: qemux/qemu-docker
+    networks:
+      - eth
     devices:
       - /dev/kvm
+      - /dev/net/tun
+      - /dev/vhost-net
     cap_add:
       - NET_ADMIN
     ports:
       - 8006:8006
     stop_grace_period: 2m
-    entrypoint: ["/usr/bin/tini", "-s", "/run/entryy.sh"]
-    user: root
+    device_cgroup_rules:
+      - 'c *:* rwm'
     environment:
-      DISK_SIZE: "10G"
-      RAM_SIZE: "2000G"
-      CPU_CORES: "16"
+      DISK_SIZE: "5G"
+      RAM_SIZE: "1G"
+      CPU_CORES: "1"
+      DHCP: "Y"
     volumes:
-      - ./Fedora-Workstation-Live-x86_64-39-1.5.iso:/boot.iso:ro
-      - ./resett.sh:/run/resett.sh:ro
-      - ./entryy.sh:/run/entryy.sh:ro
-      - ./configg.sh:/run/configg.sh:ro
       - qemux:/storage
+      - ./ubuntu-server.iso:/boot.iso
 
 volumes:
   qemux:
     name: qemux
+
+networks:
+  eth:
+    name: eth
+    driver: macvlan
+    driver_opts:
+      parent: enp0s25
