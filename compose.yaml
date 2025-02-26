@@ -5,7 +5,7 @@ services:
     container_name: ${NAME}
     image: qemux/qemu-docker
     networks:
-      - qemux
+      qemux:
     devices:
       - /dev/kvm
       - /dev/net/tun
@@ -23,8 +23,8 @@ services:
       CPU_CORES: ${CPU_CORES}
       DHCP: "Y"
     volumes:
-      - qemux:/storage
-      - ./${ISO}:/boot.iso
+      - "qemux:/storage"
+      - "./${ISO}:/boot.iso"
 
 volumes:
   qemux:
