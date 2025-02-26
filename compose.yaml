@@ -1,11 +1,11 @@
-name: qemux
+name: ${NAME}
 
 services:
   qemux:
-    container_name: qemux
+    container_name: ${NAME}
     image: qemux/qemu-docker
     networks:
-      - eth
+      - qemux
     devices:
       - /dev/kvm
       - /dev/net/tun
@@ -18,21 +18,18 @@ services:
     device_cgroup_rules:
       - 'c *:* rwm'
     environment:
-      DISK_SIZE: "5G"
-      RAM_SIZE: "1G"
-      CPU_CORES: "1"
+      DISK_SIZE: ${DISK_SIZE}
+      RAM_SIZE: ${RAM_SIZE}
+      CPU_CORES: ${CPU_CORES}
       DHCP: "Y"
     volumes:
       - qemux:/storage
-      - ./ubuntu-server.iso:/boot.iso
+      - ./${ISO}:/boot.iso
 
 volumes:
   qemux:
-    name: qemux
+    name: ${NAME}
 
 networks:
-  eth:
-    name: eth
-    driver: macvlan
-    driver_opts:
-      parent: enp0s25
+  qemux:
+    name: ${NAME}
