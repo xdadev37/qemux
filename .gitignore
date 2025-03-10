@@ -1,1 +1,11 @@
 *.iso
+*.img
+*.raw
+*.qcow2
+*.vmdk
+*.vhd
+*.vhdx
+*.vdi
+*.img.gz
+*.qcow2.xz
+*.iso.zip

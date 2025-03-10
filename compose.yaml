@@ -4,16 +4,19 @@ services:
   qemux:
     container_name: ${NAME}
     image: qemux/qemu-docker
+    restart: always
     networks:
-      qemux:
+      - qemux
     devices:
       - /dev/kvm
       - /dev/net/tun
-      - /dev/vhost-net
+      #- /dev/vhost-net
+      #- /dev/dri
+      #- /dev/bus/usb
     cap_add:
       - NET_ADMIN
     ports:
-      - 8006:8006
+      - ${NOVNC_PORT}:8006
     stop_grace_period: 2m
     device_cgroup_rules:
       - 'c *:* rwm'
@@ -21,10 +24,13 @@ services:
       DISK_SIZE: ${DISK_SIZE}
       RAM_SIZE: ${RAM_SIZE}
       CPU_CORES: ${CPU_CORES}
-      DHCP: "Y"
+      #DHCP: "Y"
+      #BOOT: "/boot.img.gz"
+      #GPU: "Y"
+      #ARGUMENTS: "-device usb-host,vendorid=0x152d,productid=0x0578"
     volumes:
       - "qemux:/storage"
-      - "./${ISO}:/boot.iso"
+      - "./${FILENAME}.${FILE_EXT}:/boot.${FILE_EXT}"
 
 volumes:
   qemux:
