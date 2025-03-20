@@ -3,7 +3,7 @@ name: ${NAME}
 services:
   qemux:
     container_name: ${NAME}
-    image: qemux/qemu-docker
+    image: qemux/qemu
     restart: always
     networks:
       - qemux
