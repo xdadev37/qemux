@@ -30,8 +30,8 @@ services:
       #ARGUMENTS: "-device usb-host,vendorid=0x152d,productid=0x0578"
     volumes:
       - "qemux:/storage"
-      - "./${FILENAME}.${FILE_EXT}:/boot.${FILE_EXT}"
-      - "./shared:/shared"
+#      - "./${FILENAME}.${FILE_EXT}:/boot.${FILE_EXT}"
+#      - "./shared:/shared"
 
 volumes:
   qemux:
